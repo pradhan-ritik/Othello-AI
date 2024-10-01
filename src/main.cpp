@@ -1,6 +1,8 @@
-#include <iostream>
+#include "constants.hpp"
+#include "bitboard_operations.hpp"
+#include "tests.hpp"
 
 int main() {
-    std::cout << "Hello World" << std::endl;
+    Bit_Ops().run();
     return 0;
 }
