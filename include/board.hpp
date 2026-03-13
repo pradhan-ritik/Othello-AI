@@ -16,4 +16,7 @@ public:
     inline BB get_empties() { return ~(get_full()); }
     inline bool get_turn() { return turn; }
     inline void next_turn() { turn = !turn; }
+    inline bool is_empty(int square) { return get_empties() & square_to_BB(square); }
+    inline bool is_white(int square) { return white & square_to_BB(square); }
+    inline bool is_black(int square) { return black & square_to_BB(square); }
 };
