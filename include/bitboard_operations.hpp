@@ -1,18 +1,28 @@
-#ifndef BITBOARD_OPERATIONS_HPP
-#define BITBOARD_OPERATIONS_HPP
-
+#pragma once
 #include "constants.hpp"
 
 inline BB square_to_BB(int square) {
+    assert(-1 < square < 64);
     return 1ULL << square;
 }
 
 inline void flip_bit(BB& bitboard, int bit) {
+    assert(-1 < bit < 64);
     bitboard ^= square_to_BB(bit);
 }
 
-inline bool test_bit(BB bitboard, int bit) {
+inline bool get_bit(BB bitboard, int bit) {
+    assert(-1 < bit < 64);
     return bitboard & (square_to_BB(bit));
+}
+
+inline void add_bit(BB& bitboard, int bit) {
+    assert(-1 < bit < 64);
+    bitboard |= square_to_BB(bit);
+}
+
+inline bool contains(BB bitboard, BB other) {
+    return (bitboard & other) == other;
 }
 
 inline int lsb(BB bitboard) {
@@ -75,16 +85,32 @@ inline BB south_west(BB bitboard) {
     return south(west(bitboard));
 }
 
+inline BB diagonal_bottom_right(int steps) {
+    BB diagonal = 0x1020408001020408ULL;
+    if (steps == 0) return diagonal;
+    if (steps < 0) {
+        while (steps++ < 0) {
+            diagonal &= ~A_FILE;
+            diagonal <<= 1;
+        }
+    }
+
+    if (steps > 0) {
+        while (steps-- > 0) {
+            diagonal &= ~RANK_1;
+            diagonal >>= 8;
+        }
+    }
+}
+
 inline void print_bitboard(BB bitboard) {
     for (int i = 63; i > -1; i--) {
         if ((i+1) % 8 == 0) {
             std::cout << "\n";
         }
 
-        std::cout << test_bit(bitboard, i);
+        std::cout << get_bit(bitboard, i);
     }
 
     std::cout << "\n";
 }
-
-#endif // BITBOARD_OPERATIONS_HPP
