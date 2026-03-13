@@ -4,6 +4,7 @@
 #include <assert.h>
 
 typedef unsigned long long BB;
+typedef uint8_t Move;
 
 enum Square {
     h8, g8, f8, e8, d8, c8, b8, a8,
@@ -17,9 +18,9 @@ enum Square {
 };
 
 inline constexpr int SQUARE_NB = 64;
+inline constexpr int MAX_LEGAL_MOVES = 34;
 // 33 in reachable positions, and 34 in unreachable position
 // It is 34 just in case in some point I will allow the user to set positions
-inline constexpr int MAX_LEGAL_MOVES = 34;
 
 inline constexpr BB H_FILE = 0x0101010101010101ULL;
 inline constexpr BB G_FILE = H_FILE << 1;
